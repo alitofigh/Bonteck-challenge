@@ -1,0 +1,1 @@
+INSERT into USER (username, password, balance, role_Id, non_Locked, enable) values ('admin', '123', 150000, 6, true, true);
