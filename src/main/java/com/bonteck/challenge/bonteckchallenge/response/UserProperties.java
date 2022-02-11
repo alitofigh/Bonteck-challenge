@@ -11,7 +11,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class UserStatusResponse extends BaseResponse {
+public class UserProperties extends BaseResponse {
+    String name;
     @SerializedName("user-name")
     String username;
     String role;

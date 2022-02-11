@@ -2,8 +2,8 @@ package com.bonteck.challenge.bonteckchallenge.service;
 
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.repository.UserRepository;
-import com.bonteck.challenge.bonteckchallenge.response.UserStatusResponse;
-import com.bonteck.challenge.bonteckchallenge.security.ApplicationUserRole;
+import com.bonteck.challenge.bonteckchallenge.request.UserParam;
+import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +22,15 @@ public class UserServices {
         this.userRepository = userRepository;
     }
 
-
     @SneakyThrows
     public String getUserStatus(String username) {
         UserEntity userEntity = userRepository.findUserEntityByUsername(username);
-        UserStatusResponse userStatusResponse = new UserStatusResponse();
-        userStatusResponse.setUsername(userEntity.getUsername());
-        userStatusResponse.setRole(getRole(userEntity.getRoleId()).name());
-        userStatusResponse.setBalance(userEntity.getBalance());
-        userStatusResponse.setEnable(userEntity.isEnable());
-        userStatusResponse.setLocked(userEntity.isNonLocked());
-        return userStatusResponse.prepareResult(userStatusResponse);
+        UserProperties userProperties = new UserProperties();
+        userProperties.setUsername(userEntity.getUsername());
+        userProperties.setRole(getRole(userEntity.getRoleId()).name());
+        userProperties.setBalance(userEntity.getBalance());
+        userProperties.setEnable(userEntity.isEnable());
+        userProperties.setLocked(userEntity.isNonLocked());
+        return userProperties.prepareResult(userProperties);
     }
 }

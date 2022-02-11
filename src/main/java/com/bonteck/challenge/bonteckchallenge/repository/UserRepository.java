@@ -16,4 +16,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
     List<UserEntity> findAllByRoleId(Integer roleId);
 
 
+
+
 }

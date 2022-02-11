@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.bonteck.challenge.bonteckchallenge.security.ApplicationUserRole.ADMIN_2;
+
 /**
  * @author Ali Tofigh 2/10/2022 10:08 AM
  */
@@ -35,7 +37,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/public/*", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/management/**").hasRole(ApplicationUserRole.ADMIN_2.name())
+                .antMatchers("/management/**", "/communication/**", "/users/**").hasRole(ADMIN_2.name())
                 .anyRequest()
                 .authenticated()
                 .and()
