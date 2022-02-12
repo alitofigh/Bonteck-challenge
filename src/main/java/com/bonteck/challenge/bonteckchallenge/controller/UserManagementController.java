@@ -27,19 +27,19 @@ public class UserManagementController {
         this.managementServices = managementServices;
     }
 
-    @PostMapping(value = "/add-new-user", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add-new-user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN_2', 'ROLE_ADMIN_1')")
     public String registerUser(@RequestBody UserParam user) {
         UserEntity userEntity = new UserEntity();
-        /*userEntity.setName(user.getName());
+        userEntity.setName(user.getName());
         userEntity.setUsername(user.getUsername());
         userEntity.setPassword(user.getPassword());
         userEntity.setBalance(user.getBalance());
         userEntity.setRoleId(user.getRoleId());
         userEntity.setNonLocked(true);
         userEntity.setEnable(true);
-        managementServices.save(userEntity);*/
+        managementServices.save(userEntity);
         return "user added successfully";
     }
 
