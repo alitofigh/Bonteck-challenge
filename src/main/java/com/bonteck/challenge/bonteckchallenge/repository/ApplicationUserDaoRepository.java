@@ -1,12 +1,16 @@
 package com.bonteck.challenge.bonteckchallenge.repository;
 
 import com.bonteck.challenge.bonteckchallenge.dao.ApplicationUserDAO;
+import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.security.auth.ApplicationUser;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.bonteck.challenge.bonteckchallenge.security.ApplicationUserRole.getRole;
 
@@ -29,8 +33,11 @@ public class ApplicationUserDaoRepository implements ApplicationUserDAO {
     public Optional<ApplicationUser> getUser(String username) {
         try {
             UserEntity userEntity = userRepository.findUserEntityByUsername(username);
-            return Optional.of(new ApplicationUser(
-                    getRole(userEntity.getRoleId()).getAuthorities(),
+            Set<GrantedAuthority> authorities = new HashSet<>();
+            for(RoleEntity roleEntity : userEntity.getRoles()) {
+                authorities.addAll(getRole(roleEntity.getRoleId()).getAuthorities());
+            }
+            return Optional.of(new ApplicationUser(authorities,
                     passwordEncoder.encode(userEntity.getPassword()),
                     userEntity.getUsername(),
                     true,

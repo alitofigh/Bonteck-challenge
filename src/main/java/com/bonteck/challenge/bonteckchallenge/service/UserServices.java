@@ -1,5 +1,6 @@
 package com.bonteck.challenge.bonteckchallenge.service;
 
+import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.repository.UserRepository;
 import com.bonteck.challenge.bonteckchallenge.request.UserParam;
@@ -27,7 +28,11 @@ public class UserServices {
         UserEntity userEntity = userRepository.findUserEntityByUsername(username);
         UserProperties userProperties = new UserProperties();
         userProperties.setUsername(userEntity.getUsername());
-        userProperties.setRole(getRole(userEntity.getRoleId()).name());
+        StringBuilder roles = new StringBuilder();
+        for (RoleEntity role : userEntity.getRoles()) {
+            roles.append(role.getRoleName()).append(", ");
+        }
+        userProperties.setRole(roles.toString());
         userProperties.setBalance(userEntity.getBalance());
         userProperties.setEnable(userEntity.isEnable());
         userProperties.setLocked(userEntity.isNonLocked());

@@ -5,12 +5,23 @@ package com.bonteck.challenge.bonteckchallenge.security;
  */
 
 public enum ApplicationUserPermission {
-    COMMUNICATION_READ("communication:read"),
-    COMMUNICATION_WRITE("communication:write"),
-    INQUIRY_READ("inquiry:read"),
-    INQUIRY_WRITE("inquiry:write"),
-    USER_MANAGEMENT_READ("user-management:read"),
-    USER_MANAGEMENT_WRITE("user-management:write");
+    /* communication part - when a new service is added to communicationController
+       this part must be update. */
+    COMMUNICATION_SMS("communication:sms"),
+    COMMUNICATION_EMAIL("communication:email"),
+    COMMUNICATION_NEWS("communication:news"),
+
+    /* Inquiry part - when a new service is added to InquiryController
+       this part must be update. */
+    INQUIRY_USER_STATUS("inquiry:user status"),
+    INQUIRY_ALLOWED_SERVICES("inquiry:allowed services"),
+    INQUIRY_ACTIVE_SERVICES("inquiry:active services"),
+
+    /* User management part - when a new service is added to UserManagementController
+       this part must be update. */
+    USER_MANAGEMENT_ADD_USER("user-management:add user"),
+    USER_MANAGEMENT_CHANGE_ROLE("user-management:change role"),
+    USER_MANAGEMENT_ALL_USERS("user-management:all users");
 
     private final String permission;
 

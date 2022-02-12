@@ -21,7 +21,11 @@ public class UserEntity {
     private String username;
     private String password;
     private int balance;
-    private int roleId;
     private boolean nonLocked;
     private boolean enable;
+    @ManyToMany
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name ="id"))
+    private Set<RoleEntity> roles;
 }
