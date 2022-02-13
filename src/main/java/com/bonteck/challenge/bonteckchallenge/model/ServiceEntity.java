@@ -3,11 +3,9 @@ package com.bonteck.challenge.bonteckchallenge.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author Ali Tofigh 2/10/2022 2:38 PM
@@ -23,6 +21,8 @@ public class ServiceEntity {
  private Long id;
  private String name;
  private Integer cost;
- private int max;
+ private boolean isActive;
  private Date activationDate;
+ @ManyToMany(mappedBy = "services")
+ private Set<UserEntity> users;
 }

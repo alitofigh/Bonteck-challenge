@@ -17,7 +17,7 @@ public class RoleServices {
         this.roleRepository = roleRepository;
     }
 
-    public RoleEntity getRole(int roleId) {
-        return roleRepository.findRoleEntityByRoleId(roleId);
+    public RoleEntity getRole(Long roleId) {
+        return roleRepository.findRoleEntityById(roleId);
     }
 }

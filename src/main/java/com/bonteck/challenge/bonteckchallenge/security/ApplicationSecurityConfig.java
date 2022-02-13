@@ -37,7 +37,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/public/*", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/management/**", "/communication/**", "/users/**").hasRole(ADMIN.name())
+                .antMatchers("/h2-console/**").permitAll()
+                //.antMatchers("/management/**", "/communication/**", "/users/**").hasRole(ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -45,6 +46,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.formLogin();
                 //.loginPage("/login").permitAll()
                 //.defaultSuccessUrl("/index", true);
+        http.headers().frameOptions().disable();
     }
 
     @Override

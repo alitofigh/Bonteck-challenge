@@ -35,7 +35,7 @@ public class ApplicationUserDaoRepository implements ApplicationUserDAO {
             UserEntity userEntity = userRepository.findUserEntityByUsername(username);
             Set<GrantedAuthority> authorities = new HashSet<>();
             for(RoleEntity roleEntity : userEntity.getRoles()) {
-                authorities.addAll(getRole(roleEntity.getRoleId()).getAuthorities());
+                authorities.addAll(getRole(roleEntity.getId().intValue()).getAuthorities());
             }
             return Optional.of(new ApplicationUser(authorities,
                     passwordEncoder.encode(userEntity.getPassword()),

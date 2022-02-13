@@ -21,7 +21,7 @@ public enum ApplicationUserPermission {
        this part must be update. */
     USER_MANAGEMENT_ADD_USER("user-management:add user"),
     USER_MANAGEMENT_CHANGE_ROLE("user-management:change role"),
-    USER_MANAGEMENT_ALL_USERS("user-management:all users");
+    USER_MANAGEMENT_LIST_USERS("user-management:all users");
 
     private final String permission;
 

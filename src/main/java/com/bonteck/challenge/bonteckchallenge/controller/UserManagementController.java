@@ -3,6 +3,7 @@ package com.bonteck.challenge.bonteckchallenge.controller;
 import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.request.UserParam;
+import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
 import com.bonteck.challenge.bonteckchallenge.service.ManagementServices;
 import com.bonteck.challenge.bonteckchallenge.service.RoleServices;
 import com.google.gson.Gson;
@@ -29,9 +30,9 @@ public class UserManagementController {
         this.roleServices = roleServices;
     }
 
-    @PostMapping(value = "/add-new-user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/add-new-user", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN_2', 'ROLE_ADMIN_1')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEVEL_7')")
     public String registerUser(@Validated @RequestBody UserParam user) {
         UserEntity userEntity = new UserEntity();
         userEntity.setName(user.getName());
@@ -45,10 +46,10 @@ public class UserManagementController {
     }
 
     @PostMapping("/add-role")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN_2')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEVEL_8')")
     public String addUserRole(
             @RequestParam("user-name") String username,
-            @RequestParam("role-id") int roleId) {
+            @RequestParam("role-id") long roleId) {
         UserEntity userEntity = managementServices.getUserByUsername(username);
         RoleEntity roleEntity = roleServices.getRole(roleId);
         userEntity.getRoles().add(roleEntity);
@@ -57,10 +58,10 @@ public class UserManagementController {
     }
 
     @PostMapping("/remove-role")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN_2')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEVEL_8')")
     public String removeUserRole(
             @RequestParam("user-name") String username,
-            @RequestParam("role-id") int roleId) {
+            @RequestParam("role-id") long roleId) {
         UserEntity userEntity = managementServices.getUserByUsername(username);
         RoleEntity roleEntity = roleServices.getRole(roleId);
         userEntity.getRoles().remove(roleEntity);
@@ -68,12 +69,10 @@ public class UserManagementController {
         return "role was deleted successfully";
     }
 
-    @GetMapping("/all-users")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN_2', 'ROLE_ADMIN_1')")
+    @GetMapping("/list-users")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEVEL_6')")
     public String getUsers() {
-        List<UserEntity> allUsers = managementServices.getAllUsers();
+        List<UserProperties> allUsers = managementServices.getAllUsers();
         return new Gson().toJson(allUsers);
     }
-
-
 }

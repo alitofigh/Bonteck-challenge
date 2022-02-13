@@ -17,19 +17,23 @@ import static com.bonteck.challenge.bonteckchallenge.security.ApplicationUserPer
 
 @Getter
 public enum ApplicationUserRole {
-    NORMAL_USER_LOW(0, Sets.newHashSet()),
-    NORMAL_USER_1(1, Sets.newHashSet(INQUIRY_USER_STATUS, INQUIRY_ACTIVE_SERVICES)),
-    NORMAL_USER_2(2, Sets.newHashSet(INQUIRY_ALLOWED_SERVICES)),
-    NORMAL_USER_3(3, Sets.newHashSet(COMMUNICATION_SMS)),
-    NORMAL_USER_4(4, Sets.newHashSet(COMMUNICATION_EMAIL)),
-    NORMAL_USER_5(5, Sets.newHashSet(COMMUNICATION_NEWS)),
-    NORMAL_USER_6(6, Sets.newHashSet(USER_MANAGEMENT_ADD_USER)),
-    NORMAL_USER_7(7, Sets.newHashSet(USER_MANAGEMENT_ALL_USERS)),
-    NORMAL_USER_8(8, Sets.newHashSet(USER_MANAGEMENT_CHANGE_ROLE)),
+    // Inquiry controller access part
+    LEVEL_1(1, Sets.newHashSet(INQUIRY_USER_STATUS, INQUIRY_ACTIVE_SERVICES)),
+    LEVEL_2(2, Sets.newHashSet(INQUIRY_ALLOWED_SERVICES)),
+
+    // communication controller access part
+    LEVEL_3(3, Sets.newHashSet(COMMUNICATION_SMS)),
+    LEVEL_4(4, Sets.newHashSet(COMMUNICATION_EMAIL)),
+    LEVEL_5(5, Sets.newHashSet(COMMUNICATION_NEWS)),
+
+    // management controller access part
+    LEVEL_6(6, Sets.newHashSet(USER_MANAGEMENT_LIST_USERS)),
+    LEVEL_7(7, Sets.newHashSet(USER_MANAGEMENT_ADD_USER)),
+    LEVEL_8(8, Sets.newHashSet(USER_MANAGEMENT_CHANGE_ROLE)),
     ADMIN(9,
             Sets.newHashSet(INQUIRY_USER_STATUS, INQUIRY_ACTIVE_SERVICES, INQUIRY_ALLOWED_SERVICES,
                     COMMUNICATION_SMS, COMMUNICATION_EMAIL, COMMUNICATION_NEWS, USER_MANAGEMENT_ADD_USER,
-                    USER_MANAGEMENT_ALL_USERS, USER_MANAGEMENT_CHANGE_ROLE));
+                    USER_MANAGEMENT_LIST_USERS, USER_MANAGEMENT_CHANGE_ROLE));
 
 
     private final int roleId;

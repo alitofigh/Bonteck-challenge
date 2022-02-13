@@ -18,14 +18,20 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique = true)
     private String username;
     private String password;
     private int balance;
     private boolean nonLocked;
     private boolean enable;
-    @ManyToMany
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name ="id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_ROLE",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name ="role_id"))
     private Set<RoleEntity> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_SERVICE",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name ="service_id"))
+    private Set<ServiceEntity> services;
 }

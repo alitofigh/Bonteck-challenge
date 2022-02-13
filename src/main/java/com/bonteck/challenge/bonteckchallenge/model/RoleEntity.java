@@ -18,7 +18,6 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int roleId;
     private String roleName;
     @ManyToMany(mappedBy = "roles")
     private Set<UserEntity> users;

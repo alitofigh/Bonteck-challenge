@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
 
-    RoleEntity findRoleEntityByRoleId(int roleId);
+    RoleEntity findRoleEntityById(Long roleId);
 }
