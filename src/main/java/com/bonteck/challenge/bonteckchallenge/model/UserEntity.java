@@ -24,14 +24,12 @@ public class UserEntity {
     private int balance;
     private boolean nonLocked;
     private boolean enable;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name ="role_id"))
     private Set<RoleEntity> roles;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "USER_SERVICE",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name ="service_id"))
-    private Set<ServiceEntity> services;
+    @OneToMany(mappedBy = "user")
+    private Set<UserServicesEntity> userActivities;
 }

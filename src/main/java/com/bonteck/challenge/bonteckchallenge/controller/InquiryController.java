@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
-public class InquiryServices {
+public class InquiryController {
 
     private final UserServices userServices;
 
-    public InquiryServices(UserServices userServices) {
+    public InquiryController(UserServices userServices) {
         this.userServices = userServices;
     }
 

@@ -1,11 +1,14 @@
 package com.bonteck.challenge.bonteckchallenge.service;
 
+import com.bonteck.challenge.bonteckchallenge.model.ServiceEntity;
 import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
+import com.bonteck.challenge.bonteckchallenge.model.UserServicesEntity;
+import com.bonteck.challenge.bonteckchallenge.repository.ServiceRepository;
+import com.bonteck.challenge.bonteckchallenge.repository.UserServicesRepository;
 import com.bonteck.challenge.bonteckchallenge.repository.UserRepository;
-import com.bonteck.challenge.bonteckchallenge.request.UserParam;
 import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
-import com.bonteck.challenge.bonteckchallenge.security.ApplicationUserRole;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,9 +23,17 @@ import java.util.Set;
 public class ManagementServices {
 
     private final UserRepository userRepository;
+    private final ServiceRepository serviceRepository;
+    private final UserServicesRepository userServicesRepository;
 
-    public ManagementServices(UserRepository userRepository) {
+    @Autowired
+    public ManagementServices(
+            UserRepository userRepository,
+            ServiceRepository serviceRepository,
+            UserServicesRepository userServicesRepository) {
         this.userRepository = userRepository;
+        this.serviceRepository = serviceRepository;
+        this.userServicesRepository = userServicesRepository;
     }
 
     public UserEntity save(UserEntity userEntity) {
@@ -58,7 +69,32 @@ public class ManagementServices {
         return userRepository.findUserEntityByUsername(username);
     }
 
-    /*public List<UserEntity> getAllUsersInRole(ApplicationUserRole role) {
-        return userRepository.findAllById(role.getRoleId());
+
+    /*public void getActiveServices() {
+        List<ServiceEntity> activeServices = serviceRepository.findAllByActive(true);
+
     }*/
+
+    /*public int changeServiceStatus(long serviceId, boolean status) {
+        return serviceRepository.changeServiceStatus(serviceId, status);
+    }*/
+
+    public void giveUserAccessToUser(String username, long serviceId) {
+        UserServicesEntity userServicesEntity = new UserServicesEntity();
+        userServicesEntity.setUser(userRepository.findUserEntityByUsername(username));
+        userServicesEntity.setService(serviceRepository.findServiceEntityById(serviceId));
+        userServicesEntity.setActive(true);
+        userServicesEntity.setCount(0);
+        userServicesRepository.save(userServicesEntity);
+    }
+
+    public void changeUserServiceStatus(String username, long serviceId) {
+        UserServicesEntity userServicesEntity =
+                userServicesRepository.findByUserAndService(
+                        userRepository.findUserEntityByUsername(username),
+                        serviceRepository.findServiceEntityById(serviceId)
+                );
+        userServicesEntity.setActive(true);
+        userServicesRepository.save(userServicesEntity);
+    }
 }

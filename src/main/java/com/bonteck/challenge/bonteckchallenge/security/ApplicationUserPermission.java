@@ -13,15 +13,18 @@ public enum ApplicationUserPermission {
 
     /* Inquiry part - when a new service is added to InquiryController
        this part must be update. */
-    INQUIRY_USER_STATUS("inquiry:user status"),
-    INQUIRY_ALLOWED_SERVICES("inquiry:allowed services"),
-    INQUIRY_ACTIVE_SERVICES("inquiry:active services"),
+    INQUIRY_USER_STATUS("inquiry:user-status"),
+    INQUIRY_ALLOWED_SERVICES("inquiry:allowed-services"),
+    INQUIRY_ACTIVE_SERVICES("inquiry:active-services"),
 
     /* User management part - when a new service is added to UserManagementController
        this part must be update. */
-    USER_MANAGEMENT_ADD_USER("user-management:add user"),
-    USER_MANAGEMENT_CHANGE_ROLE("user-management:change role"),
-    USER_MANAGEMENT_LIST_USERS("user-management:all users");
+    MANAGEMENT_ADD_USER("management:register"),
+    MANAGEMENT_CHANGE_ROLE("management:change-role"),
+    MANAGEMENT_CHANGE_Service_Status("management:change-service-status"),
+    MANAGEMENT_CHANGE_Service_ACCESS("management:service-access-to-user"),
+    MANAGEMENT_CHANGE_USER_Service_STATUS("management:change-user-service-status"),
+    MANAGEMENT_LIST_USERS("management:list-users");
 
     private final String permission;
 

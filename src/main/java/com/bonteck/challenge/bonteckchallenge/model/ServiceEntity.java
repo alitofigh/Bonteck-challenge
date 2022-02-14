@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Ali Tofigh 2/10/2022 2:38 PM
@@ -23,6 +23,6 @@ public class ServiceEntity {
  private Integer cost;
  private boolean isActive;
  private Date activationDate;
- @ManyToMany(mappedBy = "services")
- private Set<UserEntity> users;
+ @OneToMany(mappedBy = "service")
+ private List<UserServicesEntity> userActivities;
 }
