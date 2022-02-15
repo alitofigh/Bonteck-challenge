@@ -1,6 +1,7 @@
 package com.bonteck.challenge.bonteckchallenge.controller;
 
 import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
+import com.bonteck.challenge.bonteckchallenge.model.ServiceEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.request.UserParam;
 import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
@@ -45,7 +46,7 @@ public class UserManagementController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )*/
-    @PostMapping(value = "/add-new-user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add-user", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasAuthority('management:register')")
     public String registerUser(@Validated @RequestBody UserParam user) {
@@ -91,14 +92,21 @@ public class UserManagementController {
         return new Gson().toJson(allUsers);
     }
 
-    /*@PostMapping("/change-service-status")
+    @GetMapping("/list-service-by-status")
+    @PreAuthorize("hasAuthority('management:list-users')")
+    public String getServicesByStatus(@RequestParam("status") boolean status) {
+        List<ServiceEntity> listServices = managementServices.getServicesByStatus(status);
+        return new Gson().toJson(listServices);
+    }
+
+    @PostMapping("/change-service-status")
     @PreAuthorize("hasAuthority('management:change-service-status')")
     public String changeServiceStatus(
             @RequestParam("service-id") long serviceId,
             @RequestParam("status") boolean status) {
         int res = managementServices.changeServiceStatus(serviceId, status);
         return "done successfully";
-    }*/
+    }
 
     @PostMapping("/service-access-to-user")
     @PreAuthorize("hasAuthority('management:service-access-to-user')")

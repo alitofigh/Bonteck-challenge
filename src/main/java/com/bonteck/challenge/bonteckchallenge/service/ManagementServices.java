@@ -69,15 +69,13 @@ public class ManagementServices {
         return userRepository.findUserEntityByUsername(username);
     }
 
+    public List<ServiceEntity> getServicesByStatus(boolean status) {
+        return serviceRepository.findAllByStatus(status);
+    }
 
-    /*public void getActiveServices() {
-        List<ServiceEntity> activeServices = serviceRepository.findAllByActive(true);
-
-    }*/
-
-    /*public int changeServiceStatus(long serviceId, boolean status) {
+    public int changeServiceStatus(long serviceId, boolean status) {
         return serviceRepository.changeServiceStatus(serviceId, status);
-    }*/
+    }
 
     public void giveUserAccessToUser(String username, long serviceId) {
         UserServicesEntity userServicesEntity = new UserServicesEntity();

@@ -21,7 +21,7 @@ public class ServiceEntity {
  private Long id;
  private String name;
  private Integer cost;
- private boolean isActive;
+ private boolean status;
  private Date activationDate;
  @OneToMany(mappedBy = "service")
  private List<UserServicesEntity> userActivities;

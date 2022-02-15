@@ -1,9 +1,12 @@
 package com.bonteck.challenge.bonteckchallenge.controller;
 
+import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
 import com.bonteck.challenge.bonteckchallenge.service.UserServices;
 import com.google.gson.Gson;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Ali Tofigh 2/10/2022 11:38 AM
@@ -37,5 +40,11 @@ public class InquiryController {
         return "";
     }
 
+    @GetMapping("/list-services")
+    @PreAuthorize("hasAuthority('management:list-users')")
+    public String getService() {
+        //List<UserProperties> allUsers = managementServices.getAllUsers();
+        return ""; //new Gson().toJson(allUsers);
+    }
 
 }

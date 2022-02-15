@@ -1,10 +1,13 @@
 package com.bonteck.challenge.bonteckchallenge.repository;
 
 import com.bonteck.challenge.bonteckchallenge.model.ServiceEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,12 +16,14 @@ import java.util.List;
  */
 
 @Repository
-public interface ServiceRepository extends CrudRepository<ServiceEntity, Long> {
+public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
 
     ServiceEntity findServiceEntityById(Long id);
 
-    //List<ServiceEntity> findAllByActive(boolean status);
+    List<ServiceEntity> findAllByStatus(boolean status);
 
-   // @Query("UPDATE SERVICE E SET isActive = :status where id = :serviceId")
-    //int changeServiceStatus(@Param("serviceId") Long serviceId, @Param("status") boolean status);
+    @Transactional
+    @Modifying
+    @Query("UPDATE SERVICE SET status = :status where id = :serviceId")
+    int changeServiceStatus(@Param("serviceId") Long serviceId, @Param("status") boolean status);
 }
