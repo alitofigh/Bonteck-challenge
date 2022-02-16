@@ -1,6 +1,7 @@
 package com.bonteck.challenge.bonteckchallenge.repository;
 
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
+import com.bonteck.challenge.bonteckchallenge.model.UserServicesEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

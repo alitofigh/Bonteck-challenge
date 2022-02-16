@@ -3,6 +3,7 @@ package com.bonteck.challenge.bonteckchallenge.repository;
 import com.bonteck.challenge.bonteckchallenge.model.ServiceEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserServicesEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,6 @@ public interface UserServicesRepository extends CrudRepository<UserServicesEntit
     List<UserServicesEntity> findAllByUser(UserEntity user);
     //List<UserServicesEntity> findAllByActive(Boolean status);
     UserServicesEntity findByUserAndService(UserEntity user, ServiceEntity service);
+
+    List<UserServicesEntity> findAllByUserAndStatus(UserEntity user, boolean status);
 }

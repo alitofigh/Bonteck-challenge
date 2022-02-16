@@ -69,6 +69,10 @@ public class ManagementServices {
         return userRepository.findUserEntityByUsername(username);
     }
 
+    public List<ServiceEntity> getServices() {
+        return serviceRepository.findAll();
+    }
+
     public List<ServiceEntity> getServicesByStatus(boolean status) {
         return serviceRepository.findAllByStatus(status);
     }
@@ -77,22 +81,28 @@ public class ManagementServices {
         return serviceRepository.changeServiceStatus(serviceId, status);
     }
 
+
     public void giveUserAccessToUser(String username, long serviceId) {
         UserServicesEntity userServicesEntity = new UserServicesEntity();
         userServicesEntity.setUser(userRepository.findUserEntityByUsername(username));
         userServicesEntity.setService(serviceRepository.findServiceEntityById(serviceId));
-        userServicesEntity.setActive(true);
+        userServicesEntity.setStatus(true);
         userServicesEntity.setCount(0);
         userServicesRepository.save(userServicesEntity);
     }
 
-    public void changeUserServiceStatus(String username, long serviceId) {
+    public void changeUserServiceStatus(String username, long serviceId, boolean status) {
         UserServicesEntity userServicesEntity =
                 userServicesRepository.findByUserAndService(
                         userRepository.findUserEntityByUsername(username),
                         serviceRepository.findServiceEntityById(serviceId)
                 );
-        userServicesEntity.setActive(true);
+        userServicesEntity.setStatus(status);
         userServicesRepository.save(userServicesEntity);
+    }
+
+    public List<UserServicesEntity> getActiveUserServices(String username, boolean status) {
+        return userServicesRepository.findAllByUserAndStatus(
+                userRepository.findUserEntityByUsername(username), true);
     }
 }

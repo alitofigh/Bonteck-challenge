@@ -18,10 +18,11 @@ import static com.bonteck.challenge.bonteckchallenge.security.ApplicationUserPer
 @Getter
 public enum ApplicationUserRole {
     // Inquiry controller access part
-    LEVEL_1(1, Sets.newHashSet(INQUIRY_USER_STATUS, INQUIRY_ACTIVE_SERVICES)),
-    LEVEL_2(2, Sets.newHashSet(INQUIRY_ALLOWED_SERVICES)),
+    LEVEL_1(1, Sets.newHashSet(
+            INQUIRY_USER_STATUS, INQUIRY_ACTIVE_SERVICES, INQUIRY_ALLOWED_SERVICES,INQUIRY_USED_SERVICES)),
 
     // communication controller access part
+    //LEVEL_2(2, Sets.newHashSet(COMMUNICATION_SMS)),
     LEVEL_3(3, Sets.newHashSet(COMMUNICATION_SMS)),
     LEVEL_4(4, Sets.newHashSet(COMMUNICATION_EMAIL)),
     LEVEL_5(5, Sets.newHashSet(COMMUNICATION_NEWS)),

@@ -19,19 +19,19 @@ import java.util.List;
 @Service
 public class CommunicationServices {
 
-    private final ServiceRepository ServiceRepository;
+    private final ServiceRepository serviceRepository;
     private final UserRepository userRepository;
     private final UserServicesRepository userServicesRepository;
 
     public CommunicationServices(ServiceRepository ServiceRepository, UserRepository userRepository, UserServicesRepository userServicesRepository) {
-        this.ServiceRepository = ServiceRepository;
+        this.serviceRepository = ServiceRepository;
         this.userRepository = userRepository;
         this.userServicesRepository = userServicesRepository;
     }
 
     public void save(String username, int serviceId) {
         UserEntity userEntity = userRepository.findUserEntityByUsername(username);
-        ServiceEntity ServiceEntity = ServiceRepository.findServiceEntityById(Long.parseLong("" + serviceId));
+        ServiceEntity ServiceEntity = serviceRepository.findServiceEntityById(Long.parseLong("" + serviceId));
         UserServicesEntity userServicesEntity = new UserServicesEntity();
         userServicesEntity.setUser(userEntity);
         userServicesEntity.setService(ServiceEntity);
@@ -52,8 +52,4 @@ public class CommunicationServices {
         });
         return serviceStatusList;
     }
-
-    /*public void getActiveServices() {
-        List<UserServicesEntity> userServices = userServicesRepository.findAllByActive(true);
-    }*/
 }

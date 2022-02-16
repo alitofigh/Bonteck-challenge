@@ -2,13 +2,14 @@ package com.bonteck.challenge.bonteckchallenge.service;
 
 import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
+import com.bonteck.challenge.bonteckchallenge.model.UserServicesEntity;
 import com.bonteck.challenge.bonteckchallenge.repository.UserRepository;
-import com.bonteck.challenge.bonteckchallenge.request.UserParam;
+import com.bonteck.challenge.bonteckchallenge.repository.UserServicesRepository;
 import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-import static com.bonteck.challenge.bonteckchallenge.security.ApplicationUserRole.getRole;
+import java.util.List;
 
 /**
  * @author Ali Tofigh 2/10/2022 11:27 AM
@@ -18,9 +19,11 @@ import static com.bonteck.challenge.bonteckchallenge.security.ApplicationUserRol
 public class UserServices {
 
     private final UserRepository userRepository;
+    private final UserServicesRepository userServicesRepository;
 
-    public UserServices(UserRepository userRepository) {
+    public UserServices(UserRepository userRepository, UserServicesRepository userServicesRepository) {
         this.userRepository = userRepository;
+        this.userServicesRepository = userServicesRepository;
     }
 
     @SneakyThrows
@@ -37,5 +40,17 @@ public class UserServices {
         userProperties.setEnable(userEntity.isEnable());
         userProperties.setLocked(userEntity.isNonLocked());
         return userProperties.prepareResult(userProperties);
+    }
+
+    public List<UserServicesEntity> getUserActiveServices(String username, boolean status) {
+        return userServicesRepository.findAllByUserAndStatus(userRepository.findUserEntityByUsername(username), status);
+    }
+
+    public List<UserServicesEntity> getUserServices(String username) {
+        return userServicesRepository.findAllByUser(userRepository.findUserEntityByUsername(username));
+    }
+
+    public List<UserServicesEntity> showUsedService(String username) {
+        return userServicesRepository.findAllByUser(userRepository.findUserEntityByUsername(username));
     }
 }

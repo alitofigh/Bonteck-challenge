@@ -1,5 +1,6 @@
 package com.bonteck.challenge.bonteckchallenge.controller;
 
+import com.bonteck.challenge.bonteckchallenge.model.UserServicesEntity;
 import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
 import com.bonteck.challenge.bonteckchallenge.service.UserServices;
 import com.google.gson.Gson;
@@ -29,22 +30,23 @@ public class InquiryController {
     }
 
     @GetMapping("/get-user-allowed-services")
-    @PreAuthorize("hasAnyRole('ROLE_LEVEL_2')")
+    @PreAuthorize("hasAnyRole('ROLE_LEVEL_1')")
     public String getUserAllowedServices(@RequestParam("user-name") String username) {
-        return "";
+        List<UserServicesEntity> userServices = this.userServices.getUserServices(username);
+        return new Gson().toJson(userServices);
     }
 
-    @GetMapping("/user-active-services")
+    @GetMapping("/get-user-active-services")
     @PreAuthorize("hasAnyRole('ROLE_LEVEL_1')")
     public String getUserActiveServices(@RequestParam("user-name") String username) {
-        return "";
+        List<UserServicesEntity> userActiveServices = userServices.getUserActiveServices(username, true);
+        return new Gson().toJson(userActiveServices);
     }
 
-    @GetMapping("/list-services")
-    @PreAuthorize("hasAuthority('management:list-users')")
-    public String getService() {
-        //List<UserProperties> allUsers = managementServices.getAllUsers();
-        return ""; //new Gson().toJson(allUsers);
+    @GetMapping("/show-used-services")
+    @PreAuthorize("hasAnyRole('ROLE_LEVEL_1')")
+    public String showUsedServices(@RequestParam("user-name") String username) {
+        List<UserServicesEntity> userUsedServices = userServices.showUsedService(username);
+        return new Gson().toJson(userUsedServices);
     }
-
 }

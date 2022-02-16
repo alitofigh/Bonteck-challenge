@@ -24,5 +24,6 @@ public class UserServicesEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
     private int count;
-    private boolean isActive;
+    private int max;
+    private boolean status;
 }
