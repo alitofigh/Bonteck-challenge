@@ -1,6 +1,7 @@
 package com.bonteck.challenge.bonteckchallenge.controller;
 
 import com.bonteck.challenge.bonteckchallenge.model.ServiceEntity;
+import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserServicesEntity;
 import com.bonteck.challenge.bonteckchallenge.service.ActivityLogService;
 import com.bonteck.challenge.bonteckchallenge.service.ManagementServices;
@@ -32,20 +33,31 @@ public class CommunicationController {
             @RequestParam("user-name") String username,
             @RequestParam("mobile-no") String mobileNo,
             @RequestParam("message") String message) {
-        List<UserServicesEntity> activeUserServices = managementServices.getActiveUserServices(username, true);
+        UserEntity user = managementServices.getUserByUsername(username);
+        if (user != null) {
+            if (!user.isEnable())
+                return "user is not enabled!";
+            if (!user.isNonLocked())
+                return "user is locked";
+            if (user.getBalance() < 15)
+                return "user not have enough money to invoke this service!";
+            List<UserServicesEntity> activeUserServices = managementServices.getActiveUserServices(username, true);
 
-        for (UserServicesEntity userService: activeUserServices) {
-            ServiceEntity service = userService.getService();
-            /*if (!service.isStatus())
-                return "this service is not active for you!";*/
-            if (!"send-sms".equals(service.getName()))
-                return "this service is not in your services!";
-            if (userService.getCount() > userService.getMax())
-                return "maximum exceeded.";
-            activityLogService.save(username, "send-sms");
-            return "Your message was sent successfully.";
-        }
-        return "This service is not active!";
+            boolean allowedService = false;
+            for (UserServicesEntity userService : activeUserServices) {
+                ServiceEntity service = userService.getService();
+                if ("send-sms".equals(service.getName()) && userService.getCount() < userService.getMax() + 1)
+                    allowedService = true;
+            }
+            if (allowedService) {
+                activityLogService.save(username, "send-sms");
+                user.setBalance(user.getBalance() - 15);
+                managementServices.merge(user);
+                return "Your message was sent successfully.";
+            } else
+                return "This service is not active or your balance is not enough to call it!";
+        } else
+            return String.format("user '%s' does not exist.", username);
     }
 
     @PostMapping("send-mail")

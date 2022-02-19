@@ -13,6 +13,6 @@ INSERT into ROLE (id, role_name) values (9, 'admin');
 INSERT into USER_ROLE (user_id, role_id) values (1, 9);
 
 
- INSERT INTO SERVICE (name, cost, status, activation_Date) values ('SEND SMS', 15, true, current_timestamp());
- INSERT INTO SERVICE (name, cost, status, activation_Date) values ('SEND EMAIL', 10, true, current_timestamp());
- INSERT INTO SERVICE (name, cost, status, activation_Date) values ('GET WORLD NEWS', 5, false, current_timestamp());
+ INSERT INTO SERVICE (name, cost, status, activation_Date) values ('send-sms', 15, true, current_timestamp());
+ INSERT INTO SERVICE (name, cost, status, activation_Date) values ('send-email', 10, true, current_timestamp());
+ INSERT INTO SERVICE (name, cost, status, activation_Date) values ('get-world-news', 5, false, current_timestamp());

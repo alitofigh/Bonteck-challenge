@@ -4,6 +4,7 @@ import com.bonteck.challenge.bonteckchallenge.model.RoleEntity;
 import com.bonteck.challenge.bonteckchallenge.model.ServiceEntity;
 import com.bonteck.challenge.bonteckchallenge.model.UserEntity;
 import com.bonteck.challenge.bonteckchallenge.request.UserParam;
+import com.bonteck.challenge.bonteckchallenge.response.ServiceStatus;
 import com.bonteck.challenge.bonteckchallenge.response.UserProperties;
 import com.bonteck.challenge.bonteckchallenge.service.CommunicationServices;
 import com.bonteck.challenge.bonteckchallenge.service.ManagementServices;
