@@ -33,29 +33,34 @@ public class CommunicationController {
             @RequestParam("user-name") String username,
             @RequestParam("mobile-no") String mobileNo,
             @RequestParam("message") String message) {
+        ServiceEntity serviceEntity = managementServices.getServiceByName("send-sms");
+        if (!serviceEntity.isStatus())
+            return "this service is not active.";
         UserEntity user = managementServices.getUserByUsername(username);
         if (user != null) {
             if (!user.isEnable())
                 return "user is not enabled!";
             if (!user.isNonLocked())
                 return "user is locked";
-            if (user.getBalance() < 15)
+            if (user.getBalance() < serviceEntity.getCost())
                 return "user not have enough money to invoke this service!";
-            List<UserServicesEntity> activeUserServices = managementServices.getActiveUserServices(username, true);
 
+            List<UserServicesEntity> activeUserServices = managementServices.getActiveUserServices(username, true);
             boolean allowedService = false;
             for (UserServicesEntity userService : activeUserServices) {
                 ServiceEntity service = userService.getService();
-                if ("send-sms".equals(service.getName()) && userService.getCount() < userService.getMax() + 1)
+                if ("send-sms".equals(service.getName()) && userService.getCount() < userService.getMax() + 1) {
                     allowedService = true;
+                    break;
+                }
             }
             if (allowedService) {
                 activityLogService.save(username, "send-sms");
-                user.setBalance(user.getBalance() - 15);
+                user.setBalance(user.getBalance() - serviceEntity.getCost());
                 managementServices.merge(user);
                 return "Your message was sent successfully.";
             } else
-                return "This service is not active or your balance is not enough to call it!";
+                return "This service is not active for you or your balance is not enough to call it!";
         } else
             return String.format("user '%s' does not exist.", username);
     }
@@ -66,14 +71,70 @@ public class CommunicationController {
             @RequestParam("user-name") String username,
             @RequestParam("email") String email,
             @RequestParam("message") String message) {
-        activityLogService.save(username, "send-mail");
-        return "your e-mail was sent successfully";
+        ServiceEntity serviceEntity = managementServices.getServiceByName("send-mail");
+        if (!serviceEntity.isStatus())
+            return "this service is not active.";
+        UserEntity user = managementServices.getUserByUsername(username);
+        if (user != null) {
+            if (!user.isEnable())
+                return "user is not enabled!";
+            if (!user.isNonLocked())
+                return "user is locked";
+            if (user.getBalance() < serviceEntity.getCost())
+                return "user not have enough money to invoke this service!";
+            List<UserServicesEntity> activeUserServices = managementServices.getActiveUserServices(username, true);
+
+            boolean allowedService = false;
+            for (UserServicesEntity userService : activeUserServices) {
+                ServiceEntity service = userService.getService();
+                if ("send-mail".equals(service.getName()) && userService.getCount() < userService.getMax() + 1) {
+                    allowedService = true;
+                    break;
+                }
+            }
+            if (allowedService) {
+                activityLogService.save(username, "send-mail");
+                user.setBalance(user.getBalance() - serviceEntity.getCost());
+                managementServices.merge(user);
+                return "Your message was sent successfully.";
+            } else
+                return "This service is not active for you or your balance is not enough to call it!";
+        } else
+            return String.format("user '%s' does not exist.", username);
     }
 
     @GetMapping("get-world-news")
     @PreAuthorize("hasAnyRole('ROLE_LEVEL_5')")
     public String getWorldNews(@RequestParam("user-name") String username) {
-        activityLogService.save(username, "get-world-news");
-        return "The world news:  bla bla ...";
+        ServiceEntity serviceEntity = managementServices.getServiceByName("get-world-news");
+        if (!serviceEntity.isStatus())
+            return "this service is not active.";
+        UserEntity user = managementServices.getUserByUsername(username);
+        if (user != null) {
+            if (!user.isEnable())
+                return "user is not enabled!";
+            if (!user.isNonLocked())
+                return "user is locked";
+            if (user.getBalance() < serviceEntity.getCost())
+                return "user not have enough money to invoke this service!";
+            List<UserServicesEntity> activeUserServices = managementServices.getActiveUserServices(username, true);
+
+            boolean allowedService = false;
+            for (UserServicesEntity userService : activeUserServices) {
+                ServiceEntity service = userService.getService();
+                if ("get-world-news".equals(service.getName()) && userService.getCount() < userService.getMax() + 1) {
+                    allowedService = true;
+                    break;
+                }
+            }
+            if (allowedService) {
+                activityLogService.save(username, "get-world-news");
+                user.setBalance(user.getBalance() - serviceEntity.getCost());
+                managementServices.merge(user);
+                return "Your message was sent successfully.";
+            } else
+                return "This service is not active for you or your balance is not enough to call it!";
+        } else
+            return String.format("user '%s' does not exist.", username);
     }
 }

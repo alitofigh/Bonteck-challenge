@@ -77,6 +77,10 @@ public class ManagementServices {
         return serviceRepository.findAllByStatus(status);
     }
 
+    public ServiceEntity getServiceByName(String serviceName) {
+        return serviceRepository.findByName(serviceName);
+    }
+
     public int changeServiceStatus(long serviceId, boolean status) {
         return serviceRepository.changeServiceStatus(serviceId, status);
     }

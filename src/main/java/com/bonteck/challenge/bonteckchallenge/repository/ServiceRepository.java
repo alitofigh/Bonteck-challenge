@@ -20,6 +20,8 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
 
     ServiceEntity findServiceEntityById(Long id);
 
+    ServiceEntity findByName(String name);
+
     List<ServiceEntity> findAllByStatus(boolean status);
 
     @Transactional
